@@ -34,15 +34,30 @@ How it is used: This is an educational task that allows you to explore different
 Precondition: 0 < number < 4000
 """
 
-def checkio(arabic_number):
-  roman_numbers = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']]
-  roman_number = ""
-  for value, letter in roman_numbers:
-        while arabic_number >= value:
-              roman_number += letter
-              arabic_number -= value
+from enum import Enum
 
-  return roman_number
+class Roman(Enum):
+    M  = 1000
+    CM = 900
+    D  = 500
+    CD = 400
+    C  = 100
+    XC = 90
+    L  = 50
+    XL = 40
+    X  = 10
+    IX = 9
+    V  = 5
+    IV = 4
+    I  = 1
+
+    @classmethod
+    def encode(self, n):
+        for numeral in self:
+            rep, n = divmod(n, numeral.value)
+            yield numeral.name * rep
+
+checkio = lambda n: ''.join(Roman.encode(n))
 
 if __name__ == '__main__':
     assert checkio(6) == 'VI'

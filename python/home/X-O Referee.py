@@ -48,7 +48,9 @@ def check_position(game_result, position):
     winner = ' '
     for square in position:
         current = game_result[square[1]][square[0]]
-        if winner == ' ':
+        if current == '.':
+            return ' '
+        elif winner == ' ':
             winner = current
         elif winner != current:
             return ' '
@@ -61,27 +63,18 @@ def checkio(game_result):
         [[(j, 2 - j) for j in range(3)]]
 
     for position in winning_positions:
+        pprint.pprint(position)
         winner = check_position(game_result, position)
         if winner != ' ':
+            print(winner)
             return winner
 
     return "D"
 
 if __name__ == '__main__':
     assert checkio([
-        "X.O",
-        "XX.",
-        "XOO"]) == "X", "Xs wins"
-    assert checkio([
-        "OO.",
-        "XOX",
-        "XOX"]) == "O", "Os wins"
-    assert checkio([
-        "OOX",
-        "XXO",
-        "OXX"]) == "D", "Draw"
-    assert checkio([
-        "O.X",
-        "XX.",
-        "XOO"]) == "X", "Xs wins again"
+        "...",
+        "XXX",
+        "OO."]) == "X", "Xs wins"
+
     print ("all done")
